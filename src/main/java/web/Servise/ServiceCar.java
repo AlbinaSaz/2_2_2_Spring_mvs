@@ -1,12 +1,12 @@
 package web.Servise;
 
+import org.springframework.stereotype.Service;
 import web.Model.Car;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
-@Component
-public class ServiseCar implements ServiceCarInterface {
+@Service
+public class ServiceCar implements ServiceCarInterface {
 
     @Override
     public List<Car> counter(List<Car> list, String counter) {

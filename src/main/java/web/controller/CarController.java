@@ -1,5 +1,6 @@
 package web.controller;
 
+import web.Dao.DaoCarInterface;
 import web.Model.Car;
 import web.Servise.ServiceCarInterface;
 import org.jetbrains.annotations.NotNull;
@@ -16,22 +17,18 @@ import java.util.List;
 public class CarController {
 
     private ServiceCarInterface serviceCar;
+    private DaoCarInterface daoCar;
 
    @Autowired
-    public CarController (ServiceCarInterface serviceCar){
+    public CarController (ServiceCarInterface serviceCar, DaoCarInterface daoCar){
        this.serviceCar = serviceCar;
+       this.daoCar = daoCar;
    }
 
 
     @GetMapping(value = "/cars")
     public String getCar(@NotNull ModelMap model, @RequestParam(value = "count", defaultValue = "5") String count) {
-        List<Car> cars = new ArrayList<>();
-        cars.add(new Car("Lada", 80, "red"));
-        cars.add(new Car("Lada", 120, "black"));
-        cars.add(new Car("Audi", 108, "green"));
-        cars.add(new Car("Kia", 110, "white"));
-        cars.add(new Car("Ford", 160, "pink"));
-        cars.add(new Car("Lada", 98, "red"));
+       List<Car> cars =  daoCar.addCars();
         cars = serviceCar.counter(cars, count);
         model.addAttribute("cars", cars);
         return "car";
